@@ -4,32 +4,32 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --background: 60 67% 98%;
+    --foreground: 0 0% 13%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 27%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 134 100% 39%;
+    --popover-foreground: 0 0% 27%;
+    --primary: 6 90% 59%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 9%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 96%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 13%;
+    --muted: 0 0% 95%;
     --muted-foreground: 0 0% 45%;
-    --accent: 134 100% 39%;
+    --accent: 6 90% 59%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 134 100% 39%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 6 90% 59%;
     --radius: 0.5rem;
 
     /* Chart colors */
-    --chart-1: 134 100% 39%;
-    --chart-2: 134 70% 50%;
-    --chart-3: 134 50% 60%;
-    --chart-4: 134 30% 70%;
+    --chart-1: 6 90% 59%;
+    --chart-2: 6 70% 65%;
+    --chart-3: 6 50% 70%;
+    --chart-4: 6 30% 75%;
   }
 
   .dark {

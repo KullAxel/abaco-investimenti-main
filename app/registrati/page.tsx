@@ -52,18 +52,18 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-12">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Registrati</CardTitle>
-          <CardDescription>
+    <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-12 bg-[#FAF6F0]">
+      <Card className="w-full max-w-md bg-white shadow-lg rounded-lg">
+        <CardHeader className="text-center pt-8 pb-4">
+          <CardTitle className="text-3xl font-bold text-gray-800">Registrati</CardTitle>
+          <CardDescription className="text-gray-600 pt-1">
             Crea un account per accedere a tutti i nostri servizi
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6 px-8 py-6">
           <form onSubmit={handleEmailRegister} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Nome</Label>
+              <Label htmlFor="name" className="text-gray-700 font-medium">Nome</Label>
               <Input 
                 id="name" 
                 type="text" 
@@ -71,10 +71,11 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                className="rounded-md border-gray-300 focus:border-[#EE6352] focus:ring-[#EE6352]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-gray-700 font-medium">Email</Label>
               <Input 
                 id="email" 
                 type="email" 
@@ -82,40 +83,46 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="rounded-md border-gray-300 focus:border-[#EE6352] focus:ring-[#EE6352]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
               <Input 
                 id="password" 
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="rounded-md border-gray-300 focus:border-[#EE6352] focus:ring-[#EE6352]"
               />
             </div>
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <Button 
+              type="submit" 
+              className="w-full rounded-full bg-[#EE6352] hover:bg-[#d95341] text-white py-3 text-base font-semibold" 
+              disabled={isLoading}
+            >
               {isLoading ? "Caricamento..." : "Registrati"}
             </Button>
           </form>
 
-          <div className="relative">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
+              <span className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Oppure continua con</span>
+              <span className="bg-white px-2 text-gray-500">Oppure continua con</span>
             </div>
           </div>
 
           <Button
             variant="outline"
-            className="w-full flex items-center justify-center gap-2"
+            className="w-full flex items-center justify-center gap-2 rounded-full border-gray-300 hover:border-gray-400 text-gray-700 py-3"
             onClick={handleGoogleRegister}
             disabled={isLoading}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 fill="#4285F4"
@@ -134,14 +141,14 @@ export default function RegisterPage() {
               />
               <path d="M1 1h22v22H1z" fill="none" />
             </svg>
-            {isLoading ? "Caricamento..." : "Registrati con Google"}
+            <span className="text-sm font-medium">{isLoading ? "Caricamento..." : "Registrati con Google"}</span>
           </Button>
         </CardContent>
-        <Separator className="my-4" />
-        <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
+        <Separator className="my-0 bg-gray-200" />
+        <CardFooter className="flex justify-center py-6">
+          <p className="text-sm text-gray-600">
             Hai già un account?{" "}
-            <Link href="/accedi" className="text-primary font-medium">
+            <Link href="/accedi" className="text-[#EE6352] hover:text-[#d95341] font-medium">
               Accedi
             </Link>
           </p>

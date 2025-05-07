@@ -57,10 +57,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-12">
-      <Card className="w-full max-w-md">
+    <div className="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-12 bg-[#FBF7F0]">
+      <Card className="w-full max-w-md shadow-xl border-none">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Accedi</CardTitle>
+          <CardTitle className="text-3xl font-bold">Accedi</CardTitle>
           <CardDescription>
             Accedi per iniziare il tuo percorso di educazione finanziaria
           </CardDescription>
@@ -94,7 +94,11 @@ export default function LoginPage() {
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              className="w-full rounded-lg bg-[#ED5758] text-white hover:bg-[#D94A49]" 
+              disabled={isLoading}
+            >
               {isLoading ? "Caricamento..." : "Accedi"}
             </Button>
           </form>
@@ -110,7 +114,7 @@ export default function LoginPage() {
 
           <Button
             variant="outline"
-            className="w-full flex items-center justify-center gap-2"
+            className="w-full flex items-center justify-center gap-2 rounded-lg border-[#ED5758] text-[#ED5758] hover:bg-[#ED5758]/10 hover:text-[#ED5758]"
             onClick={handleGoogleLogin}
             disabled={isLoading}
           >
@@ -140,7 +144,7 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
             Non hai un account?{" "}
-            <Link href="/registrati" className="text-primary font-medium">
+            <Link href="/registrati" className="text-[#ED5758] hover:text-[#D94A49] font-medium">
               Registrati
             </Link>
           </p>

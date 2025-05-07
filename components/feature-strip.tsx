@@ -9,10 +9,10 @@ const features = [
 
 export default function FeatureStrip() {
   return (
-    <section className="w-full bg-[#F44C3B] py-6 flex justify-center">
+    <section className="w-full bg-primary py-6 flex justify-center">
       <div className="flex gap-10 w-full max-w-3xl justify-between">
         {features.map((f, i) => (
-          <div key={i} className="flex flex-col items-center text-white text-sm">
+          <div key={i} className="flex flex-col items-center text-primary-foreground text-sm">
             <f.icon className="w-7 h-7 mb-2" strokeWidth={1.5} />
             <span>{f.label}</span>
           </div>

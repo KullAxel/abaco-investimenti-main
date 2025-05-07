@@ -6,12 +6,12 @@ import Link from "next/link"
 export default function PricingPage() {
   return (
     <div className="flex flex-col items-center">
-      <section className="w-full py-16 md:py-24 lg:py-32 bg-secondary">
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-background">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2 max-w-3xl">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Piani di Abbonamento</h1>
-              <p className="text-muted-foreground md:text-xl">
+              <p className="text-card-foreground md:text-xl">
                 Scegli il piano più adatto alle tue esigenze e inizia a migliorare i tuoi investimenti oggi stesso.
               </p>
             </div>
@@ -20,8 +20,12 @@ export default function PricingPage() {
             {pricingPlans.map((plan, index) => (
               <Card
                 key={index}
-                className={`flex flex-col border border-border/40 transition-all duration-200 hover-scale ${
-                  plan.popular ? "border-primary" : ""
+                className={`flex flex-col transition-all duration-200 hover-scale ${
+                  plan.popular
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : plan.name === "Base"
+                    ? "bg-secondary text-secondary-foreground border-border/40"
+                    : "border-border/40"
                 }`}
               >
                 <CardHeader>
@@ -31,7 +35,7 @@ export default function PricingPage() {
                       <CardDescription>{plan.description}</CardDescription>
                     </div>
                     {plan.popular && (
-                      <div className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                      <div className="rounded-full bg-card text-primary px-3 py-1 text-xs font-medium">
                         Consigliato
                       </div>
                     )}
@@ -45,7 +49,7 @@ export default function PricingPage() {
                   <ul className="space-y-2">
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-primary" />
+                        <Check className={`h-4 w-4 ${plan.popular ? 'text-primary-foreground' : 'text-primary'}`} />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -54,8 +58,12 @@ export default function PricingPage() {
                 <CardFooter>
                   <Button
                     asChild
-                    className={`w-full rounded-full ${plan.popular ? "" : "bg-secondary hover:bg-secondary/80"}`}
-                    variant={plan.popular ? "default" : "outline"}
+                    variant="outline"
+                    className={`w-full rounded-full ${
+                      plan.popular
+                        ? "bg-card text-primary hover:bg-card/90 border-card"
+                        : "bg-card border-primary text-primary hover:bg-primary/10"
+                    }`}
                   >
                     <Link href={plan.href}>{plan.buttonText}</Link>
                   </Button>
@@ -71,7 +79,7 @@ export default function PricingPage() {
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2 max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Domande Frequenti</h2>
-              <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="text-card-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Risposte alle domande più comuni sui nostri abbonamenti
               </p>
             </div>
@@ -83,7 +91,7 @@ export default function PricingPage() {
                 className="rounded-lg border border-border/40 p-4 transition-all duration-200 hover:border-primary/40"
               >
                 <h3 className="text-lg font-bold">{faq.question}</h3>
-                <p className="mt-2 text-muted-foreground">{faq.answer}</p>
+                <p className="mt-2 text-card-foreground">{faq.answer}</p>
               </div>
             ))}
           </div>
