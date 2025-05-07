@@ -7,7 +7,7 @@ export default function TestPage() {
   return (
     <div className="container py-16 bg-background text-foreground">
       <h1 className="text-3xl font-bold mb-6">Test Page for Dark Mode</h1>
-      <p className="text-muted-foreground mb-6">This is a test page to check dark mode styling.</p>
+      <p className="text-card-foreground mb-6">This is a test page to check dark mode styling.</p>
       
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="bg-card text-card-foreground">
@@ -16,7 +16,7 @@ export default function TestPage() {
           </CardHeader>
           <CardContent>
             <p>This card uses bg-card and text-card-foreground.</p>
-            <Button className="mt-4">Standard Button</Button>
+            <Button className="mt-4 rounded-full">Standard Button</Button>
           </CardContent>
         </Card>
         
@@ -26,7 +26,7 @@ export default function TestPage() {
           </CardHeader>
           <CardContent>
             <p>This card uses bg-primary and text-primary-foreground.</p>
-            <Button variant="secondary" className="mt-4">Secondary Button</Button>
+            <Button variant="secondary" className="mt-4 rounded-full">Secondary Button</Button>
           </CardContent>
         </Card>
       </div>

@@ -82,7 +82,7 @@ export default function AIChatDemoPage() {
 
   return (
     <div className="flex flex-col">
-      <section className="w-full py-16 md:py-24 bg-secondary">
+      <section className="w-full py-16 md:py-24 bg-background">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2 max-w-3xl">
@@ -93,7 +93,7 @@ export default function AIChatDemoPage() {
             </div>
           </div>
           <div className="mx-auto max-w-4xl mt-12">
-            <Card className="border border-primary/40 bg-card/60 backdrop-blur-sm">
+            <Card className="border border-border bg-card shadow-lg">
               <CardHeader>
                 <CardTitle>Demo dell'AI Investor Chat</CardTitle>
                 <CardDescription>
@@ -102,7 +102,7 @@ export default function AIChatDemoPage() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col gap-4">
-                  <Card className="border border-border/40 bg-secondary/40">
+                  <Card className="border border-border bg-card">
                     <CardHeader className="p-4 pb-0">
                       <div className="flex items-center gap-2">
                         <Info className="h-4 w-4 text-muted-foreground" />
@@ -117,7 +117,7 @@ export default function AIChatDemoPage() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleSampleQuestion(question)}
-                            className="rounded-full border-primary/40 hover:bg-primary/10 hover:text-primary transition-colors"
+                            className="rounded-full border-primary/40 hover:bg-primary/10 hover:text-primary text-primary transition-colors"
                           >
                             {question}
                           </Button>
@@ -126,7 +126,7 @@ export default function AIChatDemoPage() {
                     </CardContent>
                   </Card>
 
-                  <ScrollArea className="h-[400px] rounded-md border border-border/40 p-4 bg-card/30">
+                  <ScrollArea className="h-[400px] rounded-md border border-border p-4 bg-background">
                     <div className="flex flex-col gap-4">
                       {messages.map((message, index) => (
                         <div
@@ -144,8 +144,8 @@ export default function AIChatDemoPage() {
                             )}
                             <div>
                               <div
-                                className={`rounded-lg p-4 ${
-                                  message.role === "assistant" ? "bg-secondary" : "bg-primary text-primary-foreground"
+                                className={`rounded-lg p-4 shadow-md ${
+                                  message.role === "assistant" ? "bg-muted text-muted-foreground" : "bg-primary text-primary-foreground"
                                 }`}
                               >
                                 <p className="whitespace-pre-line">{message.content}</p>
@@ -156,7 +156,7 @@ export default function AIChatDemoPage() {
                             </div>
                             {message.role === "user" && (
                               <Avatar>
-                                <AvatarFallback className="bg-secondary">TU</AvatarFallback>
+                                <AvatarFallback className="bg-muted text-muted-foreground">TU</AvatarFallback>
                                 <AvatarImage>
                                   <User className="h-10 w-10" />
                                 </AvatarImage>
@@ -175,7 +175,7 @@ export default function AIChatDemoPage() {
                               </AvatarImage>
                             </Avatar>
                             <div>
-                              <div className="rounded-lg p-4 bg-secondary">
+                              <div className="rounded-lg p-4 bg-muted">
                                 <div className="flex space-x-2">
                                   <div className="h-2 w-2 animate-bounce rounded-full bg-primary"></div>
                                   <div className="h-2 w-2 animate-bounce rounded-full bg-primary [animation-delay:0.2s]"></div>
@@ -190,11 +190,11 @@ export default function AIChatDemoPage() {
                       {showSubscriptionPrompt && (
                         <div className="flex justify-center">
                           <div className="bg-primary/10 rounded-lg p-4 border border-primary/30 text-center max-w-[90%] animate-fade-in">
-                            <p className="font-medium mb-2">Vuoi di più? Abbonati per accesso completo e consigli personalizzati.</p>
+                            <p className="font-medium mb-2 text-primary">Vuoi di più? Abbonati per accesso completo e consigli personalizzati.</p>
                             <Button 
                               asChild 
                               size="lg" 
-                              className="mt-2 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+                              className="mt-2 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-md"
                             >
                               <Link href="/pricing">Inizia Ora</Link>
                             </Button>
@@ -214,12 +214,12 @@ export default function AIChatDemoPage() {
                           handleSend()
                         }
                       }}
-                      className="rounded-full bg-secondary border-border/40 focus-visible:ring-primary"
+                      className="rounded-full bg-card border-border focus-visible:ring-primary shadow-sm"
                     />
                     <Button
                       onClick={handleSend}
                       disabled={isLoading || input.trim() === ""}
-                      className="rounded-full btn-hover"
+                      className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
                     >
                       <Send className="h-4 w-4" />
                     </Button>
@@ -236,7 +236,7 @@ export default function AIChatDemoPage() {
                 <Button 
                   asChild 
                   size="lg"
-                  className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+                  className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-md"
                 >
                   <Link href="/pricing">Prova Gratis per 7 Giorni</Link>
                 </Button>
@@ -275,18 +275,25 @@ export default function AIChatDemoPage() {
                 <Button 
                   asChild 
                   size="lg"
-                  className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+                  className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-md"
                 >
                   <Link href="/pricing">Inizia Ora</Link>
                 </Button>
               </div>
             </div>
             <div className="flex flex-col gap-6">
-              <div className="rounded-lg overflow-hidden border border-border/40 bg-card/60 backdrop-blur-sm">
+              <div className="rounded-lg overflow-hidden border border-border bg-card shadow-lg">
                 <div className="aspect-video relative">
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                    <Button className="rounded-full h-16 w-16 bg-primary/90 hover:bg-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8">
+                  <Image
+                    src="/placeholder-video.jpg" // Replace with actual video thumbnail if available
+                    alt="Video Placeholder"
+                    layout="fill"
+                    objectFit="cover"
+                    className="opacity-50" // Make image slightly transparent
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                    <Button className="rounded-full h-16 w-16 bg-primary/90 hover:bg-primary text-primary-foreground shadow-xl">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8">
                         <polygon points="5 3 19 12 5 21 5 3" />
                       </svg>
                     </Button>
@@ -299,11 +306,11 @@ export default function AIChatDemoPage() {
                 </div>
               </div>
               
-              <div className="bg-primary/5 rounded-lg p-6 border border-primary/20">
-                <h3 className="text-lg font-bold mb-4">Cosa dicono i nostri utenti</h3>
+              <div className="bg-primary/5 rounded-lg p-6 border border-primary/20 shadow-md">
+                <h3 className="text-lg font-bold mb-4 text-primary">Cosa dicono i nostri utenti</h3>
                 <div className="space-y-4">
                   {testimonials.map((testimonial, index) => (
-                    <div key={index} className="bg-background rounded-lg p-4 border border-border/40">
+                    <div key={index} className="bg-card rounded-lg p-4 border border-border shadow-sm">
                       <div className="flex items-center gap-1 text-amber-500 mb-2">
                         <Star className="h-4 w-4 fill-current" />
                         <Star className="h-4 w-4 fill-current" />
@@ -311,8 +318,8 @@ export default function AIChatDemoPage() {
                         <Star className="h-4 w-4 fill-current" />
                         <Star className="h-4 w-4 fill-current" />
                       </div>
-                      <p className="italic mb-2">{testimonial.text}</p>
-                      <p className="text-sm font-medium">{testimonial.author}</p>
+                      <p className="italic mb-2 text-foreground/90">{testimonial.text}</p>
+                      <p className="text-sm font-medium text-muted-foreground">{testimonial.author}</p>
                     </div>
                   ))}
                 </div>
@@ -322,7 +329,7 @@ export default function AIChatDemoPage() {
         </div>
       </section>
       
-      <section className="w-full py-16 md:py-24 bg-secondary/50">
+      <section className="w-full py-16 md:py-24 bg-background">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-8 sm:text-4xl">
@@ -330,12 +337,12 @@ export default function AIChatDemoPage() {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <Card key={index} className="border border-border/40">
+                <Card key={index} className="border border-border bg-card shadow-md">
                   <CardHeader>
                     <CardTitle className="text-xl">{faq.question}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>{faq.answer}</p>
+                    <p className="text-muted-foreground">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -345,7 +352,7 @@ export default function AIChatDemoPage() {
               <Button 
                 asChild 
                 size="lg"
-                className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+                className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-md"
               >
                 <Link href="/pricing">Prova Gratis per 7 Giorni</Link>
               </Button>

@@ -219,7 +219,7 @@ export default function PortfolioPage() {
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
 
   // Colori per i grafici
-  const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))"];
+  const COLORS = ["#EF4444", "#22C55E", "#3B82F6", "#F59E0B"]; // Red, Green, Blue, Amber
 
   // Finnhub API key from environment variables
   const FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY || "sandbox_c69f2qiad3iefr17roig"; // Fallback to sandbox key
@@ -1244,12 +1244,12 @@ export default function PortfolioPage() {
 
   // Helper function to get color based on performance
   const getPerformanceColor = (performance: number) => {
-    return performance >= 0 ? "text-primary" : "text-red-500";
+    return performance >= 0 ? "text-green-600" : "text-red-500";
   };
 
   // Get background color based on performance
   const getPerformanceBackground = (performance: number) => {
-    return performance >= 0 ? "bg-primary/10" : "bg-red-500/10";
+    return performance >= 0 ? "bg-green-100" : "bg-red-100";
   };
 
   // Se l'utente non è autenticato o il caricamento è in corso, mostra lo stato di caricamento
@@ -1276,27 +1276,27 @@ export default function PortfolioPage() {
   }
 
   return (
-    <div className="container py-16 bg-background text-foreground">
+    <div className="container py-16 bg-orange-50 text-slate-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Il tuo Portafoglio</h1>
-          <p className="text-muted-foreground">Gestisci e monitora i tuoi investimenti</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-800">Il tuo Portafoglio</h1>
+          <p className="text-slate-600">Gestisci e monitora i tuoi investimenti</p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={refreshPrices} variant="outline" size="sm" className="flex items-center gap-1">
+          <Button onClick={refreshPrices} variant="outline" size="sm" className="flex items-center gap-1 border-red-500 text-red-500 hover:bg-red-500/10 rounded-lg">
             <RefreshCw className="h-4 w-4" />
             Aggiorna Prezzi
           </Button>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="sm" className="flex items-center gap-1">
+              <Button size="sm" className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white rounded-lg">
                 <Plus className="h-4 w-4" />
                 Aggiungi Asset
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-white rounded-lg shadow-xl">
               <DialogHeader>
-                <DialogTitle>Aggiungi un nuovo asset</DialogTitle>
+                <DialogTitle className="text-slate-800">Aggiungi un nuovo asset</DialogTitle>
               </DialogHeader>
               <div className="space-y-4 pt-4">
                 <div className="flex gap-2">
@@ -1304,28 +1304,29 @@ export default function PortfolioPage() {
                     placeholder="Cerca azioni, crypto, ETF..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className="border-neutral-300 focus:border-red-500 focus:ring-red-500 rounded-lg"
                   />
-                  <Button onClick={searchAssets} disabled={isSearching}>
+                  <Button onClick={searchAssets} disabled={isSearching} className="bg-red-500 hover:bg-red-600 text-white rounded-lg">
                     <Search className="h-4 w-4" />
                   </Button>
                 </div>
                 
-                {isSearching && <p className="text-sm text-center">Ricerca in corso...</p>}
+                {isSearching && <p className="text-sm text-center text-slate-600">Ricerca in corso...</p>}
                 
                 {searchResults.length > 0 && (
-                  <div className="max-h-60 overflow-y-auto border rounded-md">
+                  <div className="max-h-60 overflow-y-auto border border-neutral-200 rounded-md">
                     {searchResults.map((result) => (
                       <div
                         key={result.symbol}
-                        className={`p-3 border-b last:border-b-0 hover:bg-secondary cursor-pointer ${
-                          selectedAsset?.symbol === result.symbol ? "bg-secondary" : ""
+                        className={`p-3 border-b border-neutral-200 last:border-b-0 hover:bg-slate-50 cursor-pointer ${
+                          selectedAsset?.symbol === result.symbol ? "bg-slate-100" : ""
                         }`}
                         onClick={() => setSelectedAsset(result)}
                       >
-                        <div className="font-medium">{result.symbol}</div>
-                        <div className="text-sm text-muted-foreground">{result.name}</div>
+                        <div className="font-medium text-slate-700">{result.symbol}</div>
+                        <div className="text-sm text-slate-500">{result.name}</div>
                         {result.price && (
-                          <div className="text-sm mt-1">€{result.price.toFixed(2)}</div>
+                          <div className="text-sm mt-1 text-slate-700">€{result.price.toFixed(2)}</div>
                         )}
                       </div>
                     ))}
@@ -1333,33 +1334,34 @@ export default function PortfolioPage() {
                 )}
                 
                 {selectedAsset && (
-                  <div className="space-y-4 pt-4 border-t">
+                  <div className="space-y-4 pt-4 border-t border-neutral-200">
                     <div>
-                      <h4 className="text-sm font-medium mb-2">Asset selezionato:</h4>
-                      <div className="bg-secondary p-3 rounded-md">
-                        <div className="font-medium">{selectedAsset.symbol}</div>
-                        <div className="text-sm text-muted-foreground">{selectedAsset.name}</div>
+                      <h4 className="text-sm font-medium mb-2 text-slate-700">Asset selezionato:</h4>
+                      <div className="bg-slate-50 p-3 rounded-md">
+                        <div className="font-medium text-slate-700">{selectedAsset.symbol}</div>
+                        <div className="text-sm text-slate-500">{selectedAsset.name}</div>
                         {selectedAsset.price && (
-                          <div className="text-sm mt-1">€{selectedAsset.price.toFixed(2)}</div>
+                          <div className="text-sm mt-1 text-slate-700">€{selectedAsset.price.toFixed(2)}</div>
                         )}
                       </div>
                     </div>
                     
                     <div>
-                      <h4 className="text-sm font-medium mb-2">Quantità:</h4>
+                      <h4 className="text-sm font-medium mb-2 text-slate-700">Quantità:</h4>
                       <Input
                         type="number"
                         min="0.000001"
                         step="0.000001"
                         value={quantity}
                         onChange={(e) => setQuantity(e.target.value)}
+                        className="border-neutral-300 focus:border-red-500 focus:ring-red-500 rounded-lg"
                       />
                     </div>
                     
                     <Button 
                       onClick={addAssetToPortfolio} 
                       disabled={isAdding} 
-                      className="w-full"
+                      className="w-full bg-red-500 hover:bg-red-600 text-white rounded-lg"
                     >
                       {isAdding ? "Aggiunta in corso..." : "Aggiungi al Portafoglio"}
                     </Button>
@@ -1372,26 +1374,26 @@ export default function PortfolioPage() {
       </div>
       
       {error && (
-        <Alert className="mb-6">
-          <AlertCircle className="h-4 w-4" />
+        <Alert variant="destructive" className="mb-6 bg-red-100 border-red-500 text-red-700">
+          <AlertCircle className="h-4 w-4 text-red-700" />
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
       
       {assets.length === 0 && !isLoading ? (
-        <Card className="bg-card text-card-foreground">
+        <Card className="bg-white text-slate-700 shadow-lg rounded-xl">
           <CardContent className="py-16">
             <div className="text-center space-y-4">
               <div className="flex justify-center">
-                <div className="bg-secondary rounded-full p-3">
-                  <Plus className="h-6 w-6 text-primary" />
+                <div className="bg-red-100 rounded-full p-3">
+                  <Plus className="h-6 w-6 text-red-500" />
                 </div>
               </div>
-              <h2 className="text-xl font-medium">Il tuo portafoglio è vuoto</h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
+              <h2 className="text-xl font-medium text-slate-800">Il tuo portafoglio è vuoto</h2>
+              <p className="text-slate-600 max-w-md mx-auto">
                 Inizia ad aggiungere asset al tuo portafoglio per monitorare le performance dei tuoi investimenti.
               </p>
-              <Button onClick={() => setDialogOpen(true)}>Aggiungi il tuo primo asset</Button>
+              <Button onClick={() => setDialogOpen(true)} className="bg-red-500 hover:bg-red-600 text-white rounded-lg">Aggiungi il tuo primo asset</Button>
             </div>
           </CardContent>
         </Card>
@@ -1400,25 +1402,25 @@ export default function PortfolioPage() {
           {/* Portfolio Summary Section */}
           <div className="grid gap-6 mb-8 grid-cols-1 md:grid-cols-3">
             {/* Total Value Card */}
-            <Card className="relative overflow-hidden bg-card text-card-foreground">
+            <Card className="relative overflow-hidden bg-white text-slate-700 shadow-lg rounded-xl">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg flex items-center gap-2 text-slate-800">
+                  <DollarSign className="h-5 w-5 text-red-500" />
                   Valore Totale
                 </CardTitle>
-                <CardDescription>Il valore complessivo del tuo portafoglio</CardDescription>
+                <CardDescription className="text-slate-600">Il valore complessivo del tuo portafoglio</CardDescription>
               </CardHeader>
               <CardContent>
                 {isLoading ? (
                   <Skeleton className="h-10 w-32 mb-2" />
                 ) : (
                   <>
-                    <div className="text-3xl font-bold mb-1">€{calculateTotalValue().toFixed(2)}</div>
+                    <div className="text-3xl font-bold mb-1 text-slate-800">€{calculateTotalValue().toFixed(2)}</div>
                     <div
                       className={`inline-flex items-center text-sm px-2 py-1 rounded-full ${
                         calculateTotalPerformance() >= 0 
-                          ? "bg-primary/10 text-primary" 
-                          : "bg-red-500/10 text-red-500"
+                          ? "bg-green-100 text-green-600" 
+                          : "bg-red-100 text-red-500"
                       }`}
                     >
                       {calculateTotalPerformance() >= 0 ? (
@@ -1432,18 +1434,18 @@ export default function PortfolioPage() {
                 )}
               </CardContent>
               <div className="absolute right-0 top-0 h-full w-24 opacity-10 flex items-center justify-center">
-                <DollarSign className="h-20 w-20 text-primary" />
+                <DollarSign className="h-20 w-20 text-red-500" />
               </div>
             </Card>
           
             {/* Daily Performance Card */}
-            <Card className="relative overflow-hidden bg-card text-card-foreground">
+            <Card className="relative overflow-hidden bg-white text-slate-700 shadow-lg rounded-xl">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg flex items-center gap-2 text-slate-800">
+                  <TrendingUp className="h-5 w-5 text-red-500" />
                   Performance Giornaliera
                 </CardTitle>
-                <CardDescription>Variazione nelle ultime 24 ore</CardDescription>
+                <CardDescription className="text-slate-600">Variazione nelle ultime 24 ore</CardDescription>
               </CardHeader>
               <CardContent>
                 {isLoading ? (
@@ -1469,14 +1471,14 @@ export default function PortfolioPage() {
                       
                       return (
                         <>
-                          <div className="text-3xl font-bold mb-1">
+                          <div className="text-3xl font-bold mb-1 text-slate-800">
                             €{Math.abs(dailyChange).toFixed(2)}
                           </div>
                           <div
                             className={`inline-flex items-center text-sm px-2 py-1 rounded-full ${
                               dailyChangePercent >= 0 
-                                ? "bg-primary/10 text-primary" 
-                                : "bg-red-500/10 text-red-500"
+                                ? "bg-green-100 text-green-600" 
+                                : "bg-red-100 text-red-500"
                             }`}
                           >
                             {dailyChangePercent >= 0 ? (
@@ -1493,18 +1495,18 @@ export default function PortfolioPage() {
                 )}
               </CardContent>
               <div className="absolute right-0 top-0 h-full w-24 opacity-10 flex items-center justify-center">
-                <TrendingUp className="h-20 w-20 text-primary" />
+                <TrendingUp className="h-20 w-20 text-red-500" />
               </div>
             </Card>
           
             {/* Asset Distribution Card */}
-            <Card className="md:col-span-1 relative overflow-hidden bg-card text-card-foreground">
+            <Card className="md:col-span-1 relative overflow-hidden bg-white text-slate-700 shadow-lg rounded-xl">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <PieChart className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg flex items-center gap-2 text-slate-800">
+                  <PieChart className="h-5 w-5 text-red-500" />
                   Distribuzione Asset
                 </CardTitle>
-                <CardDescription>Allocazione per tipo di investimento</CardDescription>
+                <CardDescription className="text-slate-600">Allocazione per tipo di investimento</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 {isLoading ? (
@@ -1541,9 +1543,9 @@ export default function PortfolioPage() {
                               if (props.active && props.payload && props.payload.length) {
                                 const payload = props.payload[0];
                                 return (
-                                  <div className="bg-background border rounded-md p-2 shadow-sm">
-                                    <p className="font-medium">{payload.name}</p>
-                                    <p>{payload.value}%</p>
+                                  <div className="bg-white border border-slate-200 rounded-md p-2 shadow-sm">
+                                    <p className="font-medium text-slate-700">{payload.name}</p>
+                                    <p className="text-slate-600">{payload.value}%</p>
                                   </div>
                                 );
                               }
@@ -1560,13 +1562,13 @@ export default function PortfolioPage() {
           </div>
           
           {/* Add historical performance chart */}
-          <Card className="mb-8 bg-card text-card-foreground">
+          <Card className="mb-8 bg-white text-slate-700 shadow-lg rounded-xl">
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <LineChartIcon className="h-5 w-5 text-primary" />
+              <CardTitle className="text-lg flex items-center gap-2 text-slate-800">
+                <LineChartIcon className="h-5 w-5 text-red-500" />
                 Andamento Storico
               </CardTitle>
-              <CardDescription>Performance degli ultimi 30 giorni</CardDescription>
+              <CardDescription className="text-slate-600">Performance degli ultimi 30 giorni</CardDescription>
             </CardHeader>
             <CardContent>
               {isLoading ? (
@@ -1582,7 +1584,7 @@ export default function PortfolioPage() {
                     if (!assetWithHistory || !assetWithHistory.historicalData) {
                       return (
                         <div className="h-full flex items-center justify-center">
-                          <p className="text-muted-foreground">
+                          <p className="text-slate-600">
                             Dati storici non disponibili. Fai clic su un asset per visualizzare i dettagli.
                           </p>
                         </div>
@@ -1601,9 +1603,9 @@ export default function PortfolioPage() {
                           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                         >
                           <defs>
-                            <linearGradient id="colorPortfolio" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8}/>
-                              <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0}/>
+                            <linearGradient id="colorPortfolioGreen" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8}/>
+                              <stop offset="95%" stopColor="#22C55E" stopOpacity={0}/>
                             </linearGradient>
                           </defs>
                           <XAxis 
@@ -1632,9 +1634,9 @@ export default function PortfolioPage() {
                           <Area 
                             type="monotone" 
                             dataKey="value" 
-                            stroke="hsl(var(--chart-1))" 
+                            stroke="#22C55E" 
                             fillOpacity={1} 
-                            fill="url(#colorPortfolio)" 
+                            fill="url(#colorPortfolioGreen)" 
                           />
                         </AreaChart>
                       </ResponsiveContainer>
@@ -1646,8 +1648,8 @@ export default function PortfolioPage() {
           </Card>
         
           <div className="mb-6">
-            <h2 className="text-2xl font-bold mb-2 text-foreground">I tuoi Asset</h2>
-            <p className="text-muted-foreground">Elenco completo dei tuoi investimenti</p>
+            <h2 className="text-2xl font-bold mb-2 text-slate-800">I tuoi Asset</h2>
+            <p className="text-slate-600">Elenco completo dei tuoi investimenti</p>
           </div>
 
           {isLoading ? (
@@ -1669,12 +1671,12 @@ export default function PortfolioPage() {
                 return (
                   <Card 
                     key={asset.id} 
-                    className="hover:shadow-md transition-all duration-200 group bg-card text-card-foreground"
+                    className="hover:shadow-md transition-all duration-200 group bg-white text-slate-700 shadow-lg rounded-xl"
                   >
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="flex items-center gap-1 capitalize font-normal">
+                          <Badge variant="outline" className="flex items-center gap-1 capitalize font-normal border-red-500 text-red-500 rounded-md">
                             {getAssetTypeIcon(asset.type)}
                             {asset.type}
                           </Badge>
@@ -1683,11 +1685,11 @@ export default function PortfolioPage() {
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Badge variant="secondary" className="font-normal">
+                                  <Badge variant="secondary" className="font-normal bg-slate-100 text-slate-700 rounded-md">
                                     {currency}
                                   </Badge>
                                 </TooltipTrigger>
-                                <TooltipContent>
+                                <TooltipContent className="bg-slate-900 text-white rounded-md">
                                   <p>Valori convertiti da {currency} a EUR</p>
                                 </TooltipContent>
                               </Tooltip>
@@ -1703,7 +1705,7 @@ export default function PortfolioPage() {
                               e.stopPropagation();
                               toggleAssetExpansion(asset);
                             }}
-                            className="h-8 w-8 rounded-full"
+                            className="h-8 w-8 rounded-full text-slate-500 hover:bg-slate-100"
                             aria-label="Mostra dettagli"
                           >
                             <Info className="h-4 w-4" />
@@ -1715,7 +1717,7 @@ export default function PortfolioPage() {
                               e.stopPropagation();
                               removeAsset(asset.id);
                             }}
-                            className="h-8 w-8 rounded-full hover:bg-destructive/10 hover:text-destructive"
+                            className="h-8 w-8 rounded-full hover:bg-red-100 hover:text-red-600"
                             aria-label="Rimuovi asset"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -1724,21 +1726,21 @@ export default function PortfolioPage() {
                       </div>
                       
                       <div className="mt-2">
-                        <h3 className="text-xl font-semibold flex items-center">
+                        <h3 className="text-xl font-semibold flex items-center text-slate-800">
                           {asset.symbol}
                         </h3>
-                        <p className="text-sm text-muted-foreground truncate">{asset.name}</p>
+                        <p className="text-sm text-slate-600 truncate">{asset.name}</p>
                       </div>
                     </CardHeader>
                     
                     <CardContent className="pb-0">
                       <div className="grid grid-cols-2 gap-4 mt-2">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">Prezzo</p>
+                          <p className="text-sm text-slate-600 mb-1">Prezzo</p>
                           <div>
-                            <div className="text-lg font-medium">€{priceEUR.toFixed(2)}</div>
+                            <div className="text-lg font-medium text-slate-800">€{priceEUR.toFixed(2)}</div>
                             {currency !== 'EUR' && (
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-slate-500">
                                 {formatCurrency(asset.current_price, currency)}
                               </div>
                             )}
@@ -1746,22 +1748,22 @@ export default function PortfolioPage() {
                         </div>
                         
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">Quantità</p>
-                          <div className="text-lg font-medium">{asset.quantity}</div>
+                          <p className="text-sm text-slate-600 mb-1">Quantità</p>
+                          <div className="text-lg font-medium text-slate-800">{asset.quantity}</div>
                         </div>
                         
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">Valore totale</p>
-                          <div className="text-lg font-medium">€{totalValueEUR.toFixed(2)}</div>
+                          <p className="text-sm text-slate-600 mb-1">Valore totale</p>
+                          <div className="text-lg font-medium text-slate-800">€{totalValueEUR.toFixed(2)}</div>
                         </div>
                         
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">Performance</p>
+                          <p className="text-sm text-slate-600 mb-1">Performance</p>
                           <div
                             className={`inline-flex items-center px-2 py-1 rounded-full text-sm ${
                               performance >= 0 
-                                ? "bg-primary/10 text-primary" 
-                                : "bg-red-500/10 text-red-500"
+                                ? "bg-green-100 text-green-600" 
+                                : "bg-red-100 text-red-500"
                             }`}
                           >
                             {performance >= 0 ? (
@@ -1802,7 +1804,7 @@ export default function PortfolioPage() {
                         }}
                       >
                         <AccordionItem value={asset.id} className="border-b-0">
-                          <AccordionTrigger className="px-6 py-2 font-normal text-sm">
+                          <AccordionTrigger className="px-6 py-2 font-normal text-sm text-slate-600 hover:bg-slate-50 hover:no-underline">
                             {expandedAssets[asset.id] ? (
                               <span className="flex items-center gap-1">
                                 <ChevronUp className="h-4 w-4" />
@@ -1816,38 +1818,38 @@ export default function PortfolioPage() {
                             )}
                           </AccordionTrigger>
                           <AccordionContent>
-                            <div className="px-6 pb-4 bg-secondary/20 rounded-b-lg">
+                            <div className="px-6 pb-4 bg-slate-50 rounded-b-lg">
                               {!loadedAssetData[asset.id] ? (
                                 <div className="py-8 flex justify-center">
                                   <div className="flex flex-col items-center gap-2">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                                    <p className="text-sm text-muted-foreground">Caricamento dati in corso...</p>
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
+                                    <p className="text-sm text-slate-600">Caricamento dati in corso...</p>
                                   </div>
                                 </div>
                               ) : (
                                 <div className="space-y-6">
                                   {/* Tabs for Asset Details */}
                                   <Tabs defaultValue="chart" className="w-full">
-                                    <TabsList className="grid w-full grid-cols-3">
-                                      <TabsTrigger value="chart" className="flex items-center gap-1">
-                                        <BarChart className="h-4 w-4" />
+                                    <TabsList className="grid w-full grid-cols-3 bg-slate-100 rounded-lg p-1">
+                                      <TabsTrigger value="chart" className="flex items-center gap-1 data-[state=active]:bg-red-500 data-[state=active]:text-white text-slate-600 rounded-md px-3 py-1.5 text-sm font-medium">
+                                        <BarChart className="h-4 w-4 text-inherit" />
                                         <span>Grafico Storico</span>
                                       </TabsTrigger>
-                                      <TabsTrigger value="fundamentals" className="flex items-center gap-1">
-                                        <BriefcaseBusiness className="h-4 w-4" />
+                                      <TabsTrigger value="fundamentals" className="flex items-center gap-1 data-[state=active]:bg-red-500 data-[state=active]:text-white text-slate-600 rounded-md px-3 py-1.5 text-sm font-medium">
+                                        <BriefcaseBusiness className="h-4 w-4 text-inherit" />
                                         <span>Fondamentali</span>
                                       </TabsTrigger>
-                                      <TabsTrigger value="news" className="flex items-center gap-1">
-                                        <Newspaper className="h-4 w-4" />
+                                      <TabsTrigger value="news" className="flex items-center gap-1 data-[state=active]:bg-red-500 data-[state=active]:text-white text-slate-600 rounded-md px-3 py-1.5 text-sm font-medium">
+                                        <Newspaper className="h-4 w-4 text-inherit" />
                                         <span>Notizie</span>
                                       </TabsTrigger>
                                     </TabsList>
                                     
                                     {/* Chart Tab */}
                                     <TabsContent value="chart" className="pt-4">
-                                      <Card>
+                                      <Card className="bg-white shadow-md rounded-lg">
                                         <CardHeader className="pb-2">
-                                          <CardTitle className="text-lg">Andamento Storico - Ultimi 6 Mesi</CardTitle>
+                                          <CardTitle className="text-lg text-slate-800">Andamento Storico - Ultimi 6 Mesi</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                           {asset.historicalData && asset.historicalData.length > 0 ? (
@@ -1868,9 +1870,9 @@ export default function PortfolioPage() {
                                                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                                                 >
                                                   <defs>
-                                                    <linearGradient id={`colorValue-${asset.id}`} x1="0" y1="0" x2="0" y2="1">
-                                                      <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8}/>
-                                                      <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0}/>
+                                                    <linearGradient id={`colorValueGreen-${asset.id}`} x1="0" y1="0" x2="0" y2="1">
+                                                      <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8}/>
+                                                      <stop offset="95%" stopColor="#22C55E" stopOpacity={0}/>
                                                     </linearGradient>
                                                   </defs>
                                                   <XAxis 
@@ -1899,16 +1901,16 @@ export default function PortfolioPage() {
                                                   <Area 
                                                     type="monotone" 
                                                     dataKey="value" 
-                                                    stroke="hsl(var(--chart-1))" 
+                                                    stroke="#22C55E" 
                                                     fillOpacity={1} 
-                                                    fill={`url(#colorValue-${asset.id})`} 
+                                                    fill={`url(#colorValueGreen-${asset.id})`} 
                                                   />
                                                 </AreaChart>
                                               </ResponsiveContainer>
                                             </div>
                                           ) : (
                                             <div className="h-[200px] flex items-center justify-center">
-                                              <p className="text-muted-foreground">Dati storici non disponibili</p>
+                                              <p className="text-slate-600">Dati storici non disponibili</p>
                                             </div>
                                           )}
                                         </CardContent>
@@ -1917,20 +1919,20 @@ export default function PortfolioPage() {
                                     
                                     {/* Fundamentals Tab */}
                                     <TabsContent value="fundamentals" className="pt-4">
-                                      <Card>
+                                      <Card className="bg-white shadow-md rounded-lg">
                                         <CardHeader className="pb-2">
-                                          <CardTitle className="text-lg">Dati Fondamentali</CardTitle>
+                                          <CardTitle className="text-lg text-slate-800">Dati Fondamentali</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                           {asset.type === 'crypto' ? (
                                             <div className="py-6 text-center">
-                                              <p className="text-muted-foreground">Dati fondamentali non disponibili per criptovalute</p>
+                                              <p className="text-slate-600">Dati fondamentali non disponibili per criptovalute</p>
                                             </div>
                                           ) : asset.keyMetrics ? (
                                             <div className="grid grid-cols-2 gap-4">
-                                              <div className="bg-secondary/30 p-4 rounded-md">
-                                                <div className="text-muted-foreground text-sm mb-1">Market Cap</div>
-                                                <div className="font-medium text-lg">
+                                              <div className="bg-slate-100 p-4 rounded-md">
+                                                <div className="text-slate-600 text-sm mb-1">Market Cap</div>
+                                                <div className="font-medium text-lg text-slate-800">
                                                   {formatCurrency(
                                                     convertToEUR(
                                                       asset.keyMetrics.metric.marketCapitalization || 0,
@@ -1941,16 +1943,16 @@ export default function PortfolioPage() {
                                                 </div>
                                               </div>
                                               
-                                              <div className="bg-secondary/30 p-4 rounded-md">
-                                                <div className="text-muted-foreground text-sm mb-1">P/E Ratio</div>
-                                                <div className="font-medium text-lg">
+                                              <div className="bg-slate-100 p-4 rounded-md">
+                                                <div className="text-slate-600 text-sm mb-1">P/E Ratio</div>
+                                                <div className="font-medium text-lg text-slate-800">
                                                   {asset.keyMetrics.metric.peBasicExclExtraTTM?.toFixed(2) || 'N/A'}
                                                 </div>
                                               </div>
                                               
-                                              <div className="bg-secondary/30 p-4 rounded-md">
-                                                <div className="text-muted-foreground text-sm mb-1">Enterprise Value</div>
-                                                <div className="font-medium text-lg">
+                                              <div className="bg-slate-100 p-4 rounded-md">
+                                                <div className="text-slate-600 text-sm mb-1">Enterprise Value</div>
+                                                <div className="font-medium text-lg text-slate-800">
                                                   {formatCurrency(
                                                     convertToEUR(
                                                       asset.keyMetrics.metric.enterpriseValue || 0,
@@ -1961,30 +1963,30 @@ export default function PortfolioPage() {
                                                 </div>
                                               </div>
                                               
-                                              <div className="bg-secondary/30 p-4 rounded-md">
-                                                <div className="text-muted-foreground text-sm mb-1">Dividend Yield</div>
-                                                <div className="font-medium text-lg">
+                                              <div className="bg-slate-100 p-4 rounded-md">
+                                                <div className="text-slate-600 text-sm mb-1">Dividend Yield</div>
+                                                <div className="font-medium text-lg text-slate-800">
                                                   {asset.keyMetrics.metric.dividendYieldIndicatedAnnual?.toFixed(2) || 'N/A'}%
                                                 </div>
                                               </div>
                                               
-                                              <div className="bg-secondary/30 p-4 rounded-md">
-                                                <div className="text-muted-foreground text-sm mb-1">Price to Sales</div>
-                                                <div className="font-medium text-lg">
+                                              <div className="bg-slate-100 p-4 rounded-md">
+                                                <div className="text-slate-600 text-sm mb-1">Price to Sales</div>
+                                                <div className="font-medium text-lg text-slate-800">
                                                   {asset.keyMetrics.metric.priceToSalesRatioTTM?.toFixed(2) || 'N/A'}
                                                 </div>
                                               </div>
                                               
-                                              <div className="bg-secondary/30 p-4 rounded-md">
-                                                <div className="text-muted-foreground text-sm mb-1">P/E (Normalized)</div>
-                                                <div className="font-medium text-lg">
+                                              <div className="bg-slate-100 p-4 rounded-md">
+                                                <div className="text-slate-600 text-sm mb-1">P/E (Normalized)</div>
+                                                <div className="font-medium text-lg text-slate-800">
                                                   {asset.keyMetrics.metric.peNormalizedAnnual?.toFixed(2) || 'N/A'}
                                                 </div>
                                               </div>
                                             </div>
                                           ) : (
                                             <div className="py-6 text-center">
-                                              <p className="text-muted-foreground">Dati fondamentali non disponibili</p>
+                                              <p className="text-slate-600">Dati fondamentali non disponibili</p>
                                             </div>
                                           )}
                                         </CardContent>
@@ -1993,15 +1995,15 @@ export default function PortfolioPage() {
                                     
                                     {/* News Tab */}
                                     <TabsContent value="news" className="pt-4">
-                                      <Card>
+                                      <Card className="bg-white shadow-md rounded-lg">
                                         <CardHeader className="pb-2">
-                                          <CardTitle className="text-lg">Ultime Notizie</CardTitle>
+                                          <CardTitle className="text-lg text-slate-800">Ultime Notizie</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                           {asset.news && asset.news.length > 0 ? (
                                             <div className="space-y-4">
                                               {asset.news.slice(0, 5).map(news => (
-                                                <div key={news.id} className="border rounded-md p-4 hover:bg-secondary/30 transition-colors">
+                                                <div key={news.id} className="border border-slate-200 rounded-md p-4 hover:bg-slate-50 transition-colors">
                                                   <div className="flex gap-4">
                                                     {news.image && (
                                                       <img 
@@ -2016,14 +2018,14 @@ export default function PortfolioPage() {
                                                     )}
                                                     <div className="flex-1">
                                                       <a 
-                                                        href={news.url} 
-                                                        target="_blank" 
+                                                        href={news.url}
+                                                        target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="font-medium hover:text-primary transition-colors"
+                                                        className="font-medium hover:text-red-500 transition-colors"
                                                       >
                                                         {news.headline}
                                                       </a>
-                                                      <p className="text-sm text-muted-foreground mt-1">
+                                                      <p className="text-sm text-card-foreground mt-1">
                                                         {new Date(news.datetime * 1000).toLocaleString()} • {news.source}
                                                       </p>
                                                     </div>
@@ -2033,7 +2035,7 @@ export default function PortfolioPage() {
                                             </div>
                                           ) : (
                                             <div className="py-6 text-center">
-                                              <p className="text-muted-foreground">Nessuna notizia disponibile</p>
+                                              <p className="text-slate-600">Nessuna notizia disponibile</p>
                                             </div>
                                           )}
                                         </CardContent>
